@@ -26,10 +26,13 @@ public class Network {
             if (router.getSpace() == 0) {
                 router.performActivity();
                 System.out.println("(" + devices.get(i).getname() + ")" + "(" + devices.get(i).getType() + ")" + " has arrived and Waiting");
+                while (router.getSpace() < 1) {
+                    router.terminateConnection();
+                }
             } else {
                 System.out.println("(" + devices.get(i).getname() + ")" + "(" + devices.get(i).getType() + ")" + " has arrived");
             }
-           // router.terminateConnection();
+
             router.addConnection(devices.get(i));
 
         }

@@ -27,21 +27,24 @@ public class Router {
     }
 
     public void terminateConnection() {
-        Thread thr = new Thread();
+        for (int i = 0; i < numOfConnections; i++) {
+            if (!connections[i].isAlive()) {
+                Device value;
+                elements.P();
+                value = connections[outptr];
+                System.out.println("Connection " + (outptr + 1) + ": " + value.getname() + " logged out");
+                outptr = (outptr + 1) % numOfConnections;
+                spaces.V();
 
-
-        Device value;
-        elements.P();
-        value = connections[outptr];
-        outptr = (outptr + 1) % numOfConnections;
-        spaces.V();
-        System.out.println("Connection " + (outptr + 1) + ": " + value.getname() + " logged out");
+            }
+        }
 
     }
 
     public void performActivity() {
         for (int i = 0; i < numOfConnections; i++) {
-            if (!connections[i].isInterrupted()) {
+            if (!connections[i].isInterrupted() && !connections[i].isAlive()) {
+                System.out.println("i=" + i);
                 connections[i].start();
                 System.out.println("Connection " + (i + 1) + ": " + connections[i].getname() + " performs online activity");
                 if (!connections[i].isAlive()) {
