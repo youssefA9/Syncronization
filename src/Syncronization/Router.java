@@ -19,6 +19,7 @@ public class Router {
     public void addConnection(Device value) {
 
         spaces.P();
+        connections[inptr] = null;
         connections[inptr] = value;
         System.out.println("Connection " + (inptr + 1) + ": " + value.getname() + " occupied");
         inptr = (inptr + 1) % numOfConnections;
@@ -43,13 +44,15 @@ public class Router {
 
     public void performActivity() {
         for (int i = 0; i < numOfConnections; i++) {
-            if (!connections[i].isInterrupted() && !connections[i].isAlive()) {
-                System.out.println("i=" + i);
-                connections[i].start();
-                System.out.println("Connection " + (i + 1) + ": " + connections[i].getname() + " performs online activity");
-                if (!connections[i].isAlive()) {
-                    terminateConnection();
-                }
+            if (connections[i].isAlive()) {
+                terminateConnection();
+            }
+            else if (!connections[i].isInterrupted()) {
+
+                    connections[i].start();
+                    System.out.println("Connection " + (i + 1) + ": " + connections[i].getname() + " performs online activity");
+
+
             }
         }
 
