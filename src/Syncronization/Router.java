@@ -44,15 +44,12 @@ public class Router {
 
     public void performActivity() {
         for (int i = 0; i < numOfConnections; i++) {
+            System.out.println(i);
             if (connections[i].isAlive()) {
                 terminateConnection();
-            }
-            else if (!connections[i].isInterrupted()) {
-
-                    connections[i].start();
-                    System.out.println("Connection " + (i + 1) + ": " + connections[i].getname() + " performs online activity");
-
-
+            } else if (!connections[i].getState().equals("TIMED_WAITING") && !connections[i].isAlive()) {
+                connections[i].start();
+                System.out.println("Connection " + (i + 1) + ": " + connections[i].getname() + " performs online activity");
             }
         }
 
