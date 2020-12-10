@@ -43,11 +43,10 @@ public class Router {
     }
 
     public void performActivity() {
+        String state;
         for (int i = 0; i < numOfConnections; i++) {
-            System.out.println(i);
-            if (connections[i].isAlive()) {
-                terminateConnection();
-            } else if (!connections[i].getState().equals("TIMED_WAITING") && !connections[i].isAlive()) {
+            state = String.valueOf(connections[i].getState());
+            if (state.equalsIgnoreCase("NEW")) {
                 connections[i].start();
                 System.out.println("Connection " + (i + 1) + ": " + connections[i].getname() + " performs online activity");
             }
