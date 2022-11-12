@@ -29,30 +29,32 @@ public class Router {
 
     public void terminateConnection() {
         for (int i = 0; i < numOfConnections; i++) {
-            if (!connections[i].isAlive()) {
-                Device value;
-                elements.P();
-                value = connections[outptr];
-                System.out.println("Connection " + (outptr + 1) + ": " + value.getname() + " logged out");
-                outptr = (outptr + 1) % numOfConnections;
-                spaces.V();
+            if (connections[i] != null) {
+                if (!connections[i].isAlive() && !connections[i].isInterrupted()) {
+                    Device value;
+                    elements.P();
+                    value = connections[outptr];
+                    System.out.println("Connection " + (outptr + 1) + ": " + value.getname() + " logged out");
+                    outptr = (outptr + 1) % numOfConnections;
+                    spaces.V();
 
+                }
             }
         }
 
     }
 
     public void performActivity() {
+        String state = "";
         for (int i = 0; i < numOfConnections; i++) {
-            if (connections[i].isAlive()) {
-                terminateConnection();
+            state = "";
+
+            if (connections[i] != null) {
+                state = String.valueOf(connections[i].getState());
             }
-            else if (!connections[i].isInterrupted()) {
-
-                    connections[i].start();
-                    System.out.println("Connection " + (i + 1) + ": " + connections[i].getname() + " performs online activity");
-
-
+            if (state.equalsIgnoreCase("NEW")) {
+                connections[i].start();
+                System.out.println("Connection " + (i + 1) + ": " + connections[i].getname() + " performs online activity");
             }
         }
 

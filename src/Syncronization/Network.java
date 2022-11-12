@@ -35,6 +35,13 @@ public class Network {
 
             router.addConnection(devices.get(i));
 
+            if (i + 1 == devices.size()) {
+                router.performActivity();
+                while (router.getSpace() < N) {
+                    router.terminateConnection();
+                }
+            }
+
         }
 
     }
